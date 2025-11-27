@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"log"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/websocket"
 )
 
@@ -63,6 +65,9 @@ func (r *Room) run() {
 				close(client.send)
 			}
 		case message := <-r.broadcast:
+			if bytes.Equal(r.lastContent, message) {
+				continue
+			}
 			r.lastContent = message
 			for client := range r.clients {
 				select {
@@ -246,7 +251,7 @@ func main() {
 	http.HandleFunc("/", handlePublish)
 
 	log.Println("Server started on :8080")
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", handlers.CompressHandler(http.DefaultServeMux))
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
