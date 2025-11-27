@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Relay Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>QR Relay Subscriber</h1>
+        
+        <div class="config-section">
+            <p>Current Room: <strong id="currentRoomDisplay">None</strong></p>
+            <div class="status-indicator" id="connectionStatus">Waiting for room...</div>
+        </div>
+
+        <div class="panels">
+            <!-- Subscriber Panel -->
+            <div class="panel subscriber">
+                <div class="output-area">
+                    <h3>Received Content:</h3>
+                    <div id="qrcode" class="qr-container"></div>
+                    <div id="receivedContent" class="content-box">Waiting for content...</div>
+                    <ul id="historyList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="qrcode.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
